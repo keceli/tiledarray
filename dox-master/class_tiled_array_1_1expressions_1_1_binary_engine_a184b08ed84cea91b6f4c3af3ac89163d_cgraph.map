@@ -1,0 +1,10 @@
+<map id="TiledArray::expressions::BinaryEngine::init_struct" name="TiledArray::expressions::BinaryEngine::init_struct">
+<area shape="rect" id="node1" title="Initialize result tensor structure." alt="" coords="5,71,195,112"/>
+<area shape="rect" id="node2" href="$namespace_tiled_array.html#a8bb41dd83ecdc33052c9c02eeda152e8" title=" " alt="" coords="245,5,416,47"/>
+<area shape="rect" id="node6" href="$class_tiled_array_1_1expressions_1_1_expr_engine.html#a0b20d1798116054d34a90502e9e43357" title="Initialize result tensor structure." alt="" coords="243,71,419,112"/>
+<area shape="rect" id="node8" href="$class_tiled_array_1_1expressions_1_1_expr_engine.html#a32ebc92e163ea6471fec3816d636c092" title="Variable list accessor." alt="" coords="243,136,418,177"/>
+<area shape="rect" id="node3" href="$struct_tiled_array_1_1detail_1_1default__world.html#af83d72c429e45b6b67859fac623d6af7" title=" " alt="" coords="480,5,628,47"/>
+<area shape="rect" id="node4" href="$namespace_tiled_array.html#a52e6e0c952abcd7466a0efdcbf305681" title=" " alt="" coords="689,13,849,39"/>
+<area shape="rect" id="node5" href="$namespace_tiled_array_1_1detail.html#a8c9a881d77f5537d3c2ced1bae4c6165" title=" " alt="" coords="897,5,1056,47"/>
+<area shape="rect" id="node7" href="$class_tiled_array_1_1expressions_1_1_expr_engine.html#a5f87f9237b657ba641e1bcf889900102" title="Cast this object to its derived type." alt="" coords="467,71,641,112"/>
+</map>

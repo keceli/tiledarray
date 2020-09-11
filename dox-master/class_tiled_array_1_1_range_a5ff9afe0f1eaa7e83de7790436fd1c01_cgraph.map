@@ -1,0 +1,6 @@
+<map id="TiledArray::Range::ordinal" name="TiledArray::Range::ordinal">
+<area shape="rect" id="node1" title="calculate the ordinal index of index" alt="" coords="5,39,151,80"/>
+<area shape="rect" id="node2" href="$class_tiled_array_1_1_range.html#a5a4793ce1597fbfd2bd9d7330d1e035d" title="Check the coordinate to make sure it is within the range." alt="" coords="199,5,344,47"/>
+<area shape="rect" id="node3" href="$class_tiled_array_1_1_range.html#a6dc4ec3890d4f27bd8028bdbee34b7ce" title="Range stride accessor." alt="" coords="199,71,344,112"/>
+<area shape="rect" id="node4" href="$class_tiled_array_1_1_range.html#a2523a775f51d85652316b03a83492db1" title="Range stride data accessor." alt="" coords="392,71,537,112"/>
+</map>
