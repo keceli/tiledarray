@@ -4,10 +4,16 @@
 Following is a brief summary of changes made in each release of TiledArray.
 
 - day-month-year: 1.0.0-alpha.3
+  - resolved issue 77: negative indices are supported, use signed 1-index type by default (this brings TA::Range
+    in sync with btas::RangeNd), to revert to legacy behavior configure with TA_SIGNED_1INDEX_TYPE=OFF (PR #214)
+  - removed interface to Elemental (PR #201)
+  - added Python interface (PR #198 and #212)
+  - added interface to ScaLAPACK (PR #173)
   - added ability to fuse vector<DistArray> -> DistArray and extract subarray from the fused array (PR #160 and #162)
   - resolved boost check issue (PR #161)
   - revamped TA::foreach and improved conversions to be able to handle non-standard policies
   - C++17 is now prerequisite
+  - CUDA 11 is now prerequisite for execution on NVIDIA GPUs; CMake 3.18 is required if CUDA is enabled
 
 - 07-June-2019: 1.0.0-alpha.2
   - modernized CMake handling of CUDA, CMake 3.10 is now required
