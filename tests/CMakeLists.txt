@@ -97,6 +97,20 @@ set(ta_test_src_files  ta_test.cpp
     initializer_list.cpp
     diagonal_array.cpp
     retile.cpp
+    tot_dist_array_part1.cpp
+    tot_dist_array_part2.cpp
+    random.cpp
+    trace.cpp
+    tot_expressions.cpp
+    annotation.cpp
+    diagonal_array.cpp
+    contraction_helpers.cpp
+    s_t_t_contract_.cpp
+    t_t_t_contract_.cpp
+    t_s_t_contract_.cpp
+    t_tot_tot_contract_.cpp
+    tot_tot_tot_contract_.cpp
+    einsum.cpp
 )
 
 if(CUDA_FOUND)
@@ -148,7 +162,7 @@ add_test(build_${executable} "${CMAKE_COMMAND}" --build ${PROJECT_BINARY_DIR} --
 if(ENABLE_MPI)
   foreach(p RANGE 1 2)
     add_test(NAME ${executable}-np-${p}
-      COMMAND ${MPIEXEC_EXECUTABLE} ${MPIEXEC_NUMPROC_FLAG} ${p} ${MPIEXEC_PREFLAGS} $<TARGET_FILE:${executable}> --log_level=test_suite --show-progress ${MPIEXEC_POSTFLAGS})
+      COMMAND ${MPIEXEC_EXECUTABLE} ${MPIEXEC_NUMPROC_FLAG} ${p} ${MPIEXEC_PREFLAGS} $<TARGET_FILE:${executable}> --log_level=warning --show-progress ${MPIEXEC_POSTFLAGS})
     set_tests_properties(${executable}-np-${p} PROPERTIES DEPENDS build_${executable})
   endforeach(p)
 else()

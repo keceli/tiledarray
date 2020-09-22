@@ -84,6 +84,7 @@ TiledArray/expressions/binary_expr.h
 TiledArray/expressions/blk_tsr_engine.h
 TiledArray/expressions/blk_tsr_expr.h
 TiledArray/expressions/cont_engine.h
+TiledArray/expressions/contraction_helpers.h
 TiledArray/expressions/expr.h
 TiledArray/expressions/expr_engine.h
 TiledArray/expressions/expr_trace.h
@@ -142,6 +143,7 @@ TiledArray/tile_interface/clone.h
 TiledArray/tile_interface/permute.h
 TiledArray/tile_interface/scale.h
 TiledArray/tile_interface/shift.h
+TiledArray/tile_interface/trace.h
 TiledArray/tile_op/add.h
 TiledArray/tile_op/binary_reduction.h
 TiledArray/tile_op/binary_wrapper.h
@@ -155,11 +157,14 @@ TiledArray/tile_op/subt.h
 TiledArray/tile_op/tile_interface.h
 TiledArray/tile_op/unary_reduction.h
 TiledArray/tile_op/unary_wrapper.h
+TiledArray/util/annotation.h
 TiledArray/util/backtrace.h
 TiledArray/util/bug.h
 TiledArray/util/function.h
+TiledArray/util/annotation.h
 TiledArray/util/initializer_list.h
 TiledArray/util/logger.h
+TiledArray/util/random.h
 TiledArray/util/singleton.h
 TiledArray/util/time.h
 TiledArray/util/vector.h

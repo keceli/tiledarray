@@ -68,11 +68,11 @@ struct TensorOfTensorFixture {
   // Fill a tensor with random data
   static Tensor<Tensor<int>> make_rand_tensor_of_tensor(const Range& r) {
     Tensor<Tensor<int>> tensor(r);
-    for (std::size_t i = 0ul; i < r.extent(0); ++i) {
-      for (std::size_t j = 0ul; j < r.extent(1); ++j) {
-        const std::array<std::size_t, 2> lower_bound = {{i * 10, j * 10}};
+    for (decltype(r.extent(0)) i = 0; i < r.extent(0); ++i) {
+      for (decltype(r.extent(1)) j = 0; j < r.extent(1); ++j) {
+        const std::array<std::size_t, 2> lower_bound = {{i * 10ul, j * 10ul}};
         const std::array<std::size_t, 2> upper_bound = {
-            {(i + 1) * 10, (j + 1) * 10}};
+            {(i + 1ul) * 10ul, (j + 1ul) * 10ul}};
         tensor(i, j) = make_rand_tensor(Range(lower_bound, upper_bound));
       }
     }
@@ -83,8 +83,8 @@ struct TensorOfTensorFixture {
   // Fill a tensor with random data
   static Tensor<btas::Tensor<int>> make_rand_TobT(const Range& r) {
     Tensor<btas::Tensor<int>> tensor(r);
-    for (std::size_t i = 0ul; i < r.extent(0); ++i) {
-      for (std::size_t j = 0ul; j < r.extent(1); ++j) {
+    for (decltype(r.extent(0)) i = 0ul; i < r.extent(0); ++i) {
+      for (decltype(r.extent(1)) j = 0ul; j < r.extent(1); ++j) {
         auto make_rand_tensor = [](size_t dim0,
                                    size_t dim1) -> btas::Tensor<int> {
           btas::Tensor<int> tensor(dim0, dim1);
@@ -100,8 +100,8 @@ struct TensorOfTensorFixture {
   // same as make_rand_TobT but with identically-sized tiles
   static Tensor<btas::Tensor<int>> make_rand_TobT_uniform(const Range& r) {
     Tensor<btas::Tensor<int>> tensor(r);
-    for (std::size_t i = 0ul; i < r.extent(0); ++i) {
-      for (std::size_t j = 0ul; j < r.extent(1); ++j) {
+    for (decltype(r.extent(0)) i = 0ul; i < r.extent(0); ++i) {
+      for (decltype(r.extent(1)) j = 0ul; j < r.extent(1); ++j) {
         auto make_rand_tensor = [](size_t dim0,
                                    size_t dim1) -> btas::Tensor<int> {
           btas::Tensor<int> tensor(dim0, dim1);
@@ -184,8 +184,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(unary_constructor, ITensor, itensor_types) {
   BOOST_CHECK(!t.empty());
   BOOST_CHECK_EQUAL(t.range(), a.range());
 
-  for (std::size_t i = 0ul; i < t.range().extent(0); ++i) {
-    for (std::size_t j = 0ul; j < t.range().extent(1); ++j) {
+  for (decltype(t.range().extent(0)) i = 0; i < t.range().extent(0); ++i) {
+    for (decltype(t.range().extent(1)) j = 0; j < t.range().extent(1); ++j) {
       BOOST_CHECK(!t(i, j).empty());
       BOOST_CHECK_EQUAL(t(i, j).range(), a(i, j).range());
       for (std::size_t index = 0ul; index < t(i, j).size(); ++index) {
@@ -205,8 +205,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(unary_perm_constructor, ITensor, itensor_types) {
   BOOST_CHECK(!t.empty());
   BOOST_CHECK_EQUAL(t.range(), perm * a.range());
 
-  for (std::size_t i = 0ul; i < t.range().extent(0); ++i) {
-    for (std::size_t j = 0ul; j < t.range().extent(1); ++j) {
+  for (decltype(t.range().extent(0)) i = 0; i < t.range().extent(0); ++i) {
+    for (decltype(t.range().extent(1)) j = 0; j < t.range().extent(1); ++j) {
       BOOST_CHECK(!t(i, j).empty());
       BOOST_CHECK_EQUAL(t(i, j).range(), a(j, i).range());
       for (std::size_t index = 0ul; index < t(i, j).size(); ++index) {
@@ -226,8 +226,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(binary_constructor, ITensor, itensor_types) {
   BOOST_CHECK(!t.empty());
   BOOST_CHECK_EQUAL(t.range(), a.range());
 
-  for (std::size_t i = 0ul; i < t.range().extent(0); ++i) {
-    for (std::size_t j = 0ul; j < t.range().extent(1); ++j) {
+  for (decltype(t.range().extent(0)) i = 0; i < t.range().extent(0); ++i) {
+    for (decltype(t.range().extent(1)) j = 0; j < t.range().extent(1); ++j) {
       BOOST_CHECK(!t(i, j).empty());
       BOOST_CHECK_EQUAL(t(i, j).range(), a(i, j).range());
       for (std::size_t index = 0ul; index < t(i, j).size(); ++index) {
@@ -248,8 +248,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(binary_perm_constructor, ITensor, itensor_types) {
   BOOST_CHECK(!t.empty());
   BOOST_CHECK_EQUAL(t.range(), perm * a.range());
 
-  for (std::size_t i = 0ul; i < t.range().extent(0); ++i) {
-    for (std::size_t j = 0ul; j < t.range().extent(1); ++j) {
+  for (decltype(t.range().extent(0)) i = 0; i < t.range().extent(0); ++i) {
+    for (decltype(t.range().extent(1)) j = 0; j < t.range().extent(1); ++j) {
       BOOST_CHECK(!t(i, j).empty());
       BOOST_CHECK_EQUAL(t(i, j).range(), a(j, i).range());
       for (std::size_t index = 0ul; index < t(i, j).size(); ++index) {
@@ -268,8 +268,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(clone, ITensor, itensor_types) {
   BOOST_CHECK_EQUAL(t.range(), a.range());
   BOOST_CHECK_NE(t.data(), a.data());
 
-  for (std::size_t i = 0ul; i < t.range().extent(0); ++i) {
-    for (std::size_t j = 0ul; j < t.range().extent(1); ++j) {
+  for (decltype(t.range().extent(0)) i = 0; i < t.range().extent(0); ++i) {
+    for (decltype(t.range().extent(1)) j = 0; j < t.range().extent(1); ++j) {
       BOOST_CHECK(!t(i, j).empty());
       BOOST_CHECK_EQUAL(t(i, j).range(), a(i, j).range());
       BOOST_CHECK_NE(t(i, j).data(), a(i, j).data());
@@ -288,8 +288,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(permute, ITensor, itensor_types) {
   BOOST_CHECK(!t.empty());
   BOOST_CHECK_EQUAL(t.range(), perm * a.range());
 
-  for (std::size_t i = 0ul; i < t.range().extent(0); ++i) {
-    for (std::size_t j = 0ul; j < t.range().extent(1); ++j) {
+  for (decltype(t.range().extent(0)) i = 0; i < t.range().extent(0); ++i) {
+    for (decltype(t.range().extent(1)) j = 0; j < t.range().extent(1); ++j) {
       BOOST_CHECK(!t(i, j).empty());
       BOOST_CHECK_EQUAL(t(i, j).range(), a(j, i).range());
       BOOST_CHECK_NE(t(i, j).data(), a(j, i).data());
@@ -308,8 +308,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(scale, ITensor, itensor_types) {
   BOOST_CHECK(!t.empty());
   BOOST_CHECK_EQUAL(t.range(), a.range());
 
-  for (std::size_t i = 0ul; i < t.range().extent(0); ++i) {
-    for (std::size_t j = 0ul; j < t.range().extent(1); ++j) {
+  for (decltype(t.range().extent(0)) i = 0; i < t.range().extent(0); ++i) {
+    for (decltype(t.range().extent(1)) j = 0; j < t.range().extent(1); ++j) {
       BOOST_CHECK(!t(i, j).empty());
       BOOST_CHECK_EQUAL(t(i, j).range(), a(i, j).range());
       for (std::size_t index = 0ul; index < t(i, j).size(); ++index) {
@@ -327,8 +327,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(scale_perm, ITensor, itensor_types) {
   BOOST_CHECK(!t.empty());
   BOOST_CHECK_EQUAL(t.range(), perm * a.range());
 
-  for (std::size_t i = 0ul; i < t.range().extent(0); ++i) {
-    for (std::size_t j = 0ul; j < t.range().extent(1); ++j) {
+  for (decltype(t.range().extent(0)) i = 0; i < t.range().extent(0); ++i) {
+    for (decltype(t.range().extent(1)) j = 0; j < t.range().extent(1); ++j) {
       BOOST_CHECK(!t(i, j).empty());
       BOOST_CHECK_EQUAL(t(i, j).range(), a(j, i).range());
       for (std::size_t index = 0ul; index < t(i, j).size(); ++index) {
@@ -346,8 +346,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(scale_to, ITensor, itensor_types) {
   BOOST_CHECK(!t.empty());
   BOOST_CHECK_EQUAL(t.range(), a.range());
 
-  for (std::size_t i = 0ul; i < t.range().extent(0); ++i) {
-    for (std::size_t j = 0ul; j < t.range().extent(1); ++j) {
+  for (decltype(t.range().extent(0)) i = 0; i < t.range().extent(0); ++i) {
+    for (decltype(t.range().extent(1)) j = 0; j < t.range().extent(1); ++j) {
       BOOST_CHECK(!t(i, j).empty());
       BOOST_CHECK_EQUAL(t(i, j).range(), a(i, j).range());
       for (std::size_t index = 0ul; index < t(i, j).size(); ++index) {
@@ -366,8 +366,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(add, ITensor, itensor_types) {
   BOOST_CHECK(!t.empty());
   BOOST_CHECK_EQUAL(t.range(), a.range());
 
-  for (std::size_t i = 0ul; i < t.range().extent(0); ++i) {
-    for (std::size_t j = 0ul; j < t.range().extent(1); ++j) {
+  for (decltype(t.range().extent(0)) i = 0; i < t.range().extent(0); ++i) {
+    for (decltype(t.range().extent(1)) j = 0; j < t.range().extent(1); ++j) {
       BOOST_CHECK(!t(i, j).empty());
       BOOST_CHECK_EQUAL(t(i, j).range(), a(i, j).range());
       for (std::size_t index = 0ul; index < t(i, j).size(); ++index) {
@@ -386,8 +386,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(scal_add, ITensor, itensor_types) {
   BOOST_CHECK(!t.empty());
   BOOST_CHECK_EQUAL(t.range(), a.range());
 
-  for (std::size_t i = 0ul; i < t.range().extent(0); ++i) {
-    for (std::size_t j = 0ul; j < t.range().extent(1); ++j) {
+  for (decltype(t.range().extent(0)) i = 0; i < t.range().extent(0); ++i) {
+    for (decltype(t.range().extent(1)) j = 0; j < t.range().extent(1); ++j) {
       BOOST_CHECK(!t(i, j).empty());
       BOOST_CHECK_EQUAL(t(i, j).range(), a(i, j).range());
       for (std::size_t index = 0ul; index < t(i, j).size(); ++index) {
@@ -407,8 +407,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(add_perm, ITensor, itensor_types) {
   BOOST_CHECK(!t.empty());
   BOOST_CHECK_EQUAL(t.range(), perm * a.range());
 
-  for (std::size_t i = 0ul; i < t.range().extent(0); ++i) {
-    for (std::size_t j = 0ul; j < t.range().extent(1); ++j) {
+  for (decltype(t.range().extent(0)) i = 0; i < t.range().extent(0); ++i) {
+    for (decltype(t.range().extent(1)) j = 0; j < t.range().extent(1); ++j) {
       BOOST_CHECK(!t(i, j).empty());
       BOOST_CHECK_EQUAL(t(i, j).range(), a(j, i).range());
       for (std::size_t index = 0ul; index < t(i, j).size(); ++index) {
@@ -427,8 +427,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(scal_add_perm, ITensor, itensor_types) {
   BOOST_CHECK(!t.empty());
   BOOST_CHECK_EQUAL(t.range(), perm * a.range());
 
-  for (std::size_t i = 0ul; i < t.range().extent(0); ++i) {
-    for (std::size_t j = 0ul; j < t.range().extent(1); ++j) {
+  for (decltype(t.range().extent(0)) i = 0; i < t.range().extent(0); ++i) {
+    for (decltype(t.range().extent(1)) j = 0; j < t.range().extent(1); ++j) {
       BOOST_CHECK(!t(i, j).empty());
       BOOST_CHECK_EQUAL(t(i, j).range(), a(j, i).range());
       for (std::size_t index = 0ul; index < t(i, j).size(); ++index) {
@@ -448,8 +448,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(add_to, ITensor, itensor_types) {
   BOOST_CHECK(!t.empty());
   BOOST_CHECK_EQUAL(t.range(), a.range());
 
-  for (std::size_t i = 0ul; i < t.range().extent(0); ++i) {
-    for (std::size_t j = 0ul; j < t.range().extent(1); ++j) {
+  for (decltype(t.range().extent(0)) i = 0; i < t.range().extent(0); ++i) {
+    for (decltype(t.range().extent(1)) j = 0; j < t.range().extent(1); ++j) {
       BOOST_CHECK(!t(i, j).empty());
       BOOST_CHECK_EQUAL(t(i, j).range(), a(i, j).range());
       for (std::size_t index = 0ul; index < t(i, j).size(); ++index) {
@@ -468,8 +468,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(scal_add_to, ITensor, itensor_types) {
   BOOST_CHECK(!t.empty());
   BOOST_CHECK_EQUAL(t.range(), a.range());
 
-  for (std::size_t i = 0ul; i < t.range().extent(0); ++i) {
-    for (std::size_t j = 0ul; j < t.range().extent(1); ++j) {
+  for (decltype(t.range().extent(0)) i = 0; i < t.range().extent(0); ++i) {
+    for (decltype(t.range().extent(1)) j = 0; j < t.range().extent(1); ++j) {
       BOOST_CHECK(!t(i, j).empty());
       BOOST_CHECK_EQUAL(t(i, j).range(), a(i, j).range());
       for (std::size_t index = 0ul; index < t(i, j).size(); ++index) {
@@ -488,8 +488,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(add_const, ITensor, itensor_types) {
   BOOST_CHECK(!t.empty());
   BOOST_CHECK_EQUAL(t.range(), a.range());
 
-  for (std::size_t i = 0ul; i < t.range().extent(0); ++i) {
-    for (std::size_t j = 0ul; j < t.range().extent(1); ++j) {
+  for (decltype(t.range().extent(0)) i = 0; i < t.range().extent(0); ++i) {
+    for (decltype(t.range().extent(1)) j = 0; j < t.range().extent(1); ++j) {
       BOOST_CHECK(!t(i, j).empty());
       BOOST_CHECK_EQUAL(t(i, j).range(), a(i, j).range());
       for (std::size_t index = 0ul; index < t(i, j).size(); ++index) {
@@ -507,8 +507,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(add_to_const, ITensor, itensor_types) {
   BOOST_CHECK(!t.empty());
   BOOST_CHECK_EQUAL(t.range(), a.range());
 
-  for (std::size_t i = 0ul; i < t.range().extent(0); ++i) {
-    for (std::size_t j = 0ul; j < t.range().extent(1); ++j) {
+  for (decltype(t.range().extent(0)) i = 0; i < t.range().extent(0); ++i) {
+    for (decltype(t.range().extent(1)) j = 0; j < t.range().extent(1); ++j) {
       BOOST_CHECK(!t(i, j).empty());
       BOOST_CHECK_EQUAL(t(i, j).range(), a(i, j).range());
       for (std::size_t index = 0ul; index < t(i, j).size(); ++index) {
@@ -527,8 +527,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(subt, ITensor, itensor_types) {
   BOOST_CHECK(!t.empty());
   BOOST_CHECK_EQUAL(t.range(), a.range());
 
-  for (std::size_t i = 0ul; i < t.range().extent(0); ++i) {
-    for (std::size_t j = 0ul; j < t.range().extent(1); ++j) {
+  for (decltype(t.range().extent(0)) i = 0; i < t.range().extent(0); ++i) {
+    for (decltype(t.range().extent(1)) j = 0; j < t.range().extent(1); ++j) {
       BOOST_CHECK(!t(i, j).empty());
       BOOST_CHECK_EQUAL(t(i, j).range(), a(i, j).range());
       for (std::size_t index = 0ul; index < t(i, j).size(); ++index) {
@@ -547,8 +547,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(scal_subt, ITensor, itensor_types) {
   BOOST_CHECK(!t.empty());
   BOOST_CHECK_EQUAL(t.range(), a.range());
 
-  for (std::size_t i = 0ul; i < t.range().extent(0); ++i) {
-    for (std::size_t j = 0ul; j < t.range().extent(1); ++j) {
+  for (decltype(t.range().extent(0)) i = 0; i < t.range().extent(0); ++i) {
+    for (decltype(t.range().extent(1)) j = 0; j < t.range().extent(1); ++j) {
       BOOST_CHECK(!t(i, j).empty());
       BOOST_CHECK_EQUAL(t(i, j).range(), a(i, j).range());
       for (std::size_t index = 0ul; index < t(i, j).size(); ++index) {
@@ -568,8 +568,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(subt_perm, ITensor, itensor_types) {
   BOOST_CHECK(!t.empty());
   BOOST_CHECK_EQUAL(t.range(), perm * a.range());
 
-  for (std::size_t i = 0ul; i < t.range().extent(0); ++i) {
-    for (std::size_t j = 0ul; j < t.range().extent(1); ++j) {
+  for (decltype(t.range().extent(0)) i = 0; i < t.range().extent(0); ++i) {
+    for (decltype(t.range().extent(1)) j = 0; j < t.range().extent(1); ++j) {
       BOOST_CHECK(!t(i, j).empty());
       BOOST_CHECK_EQUAL(t(i, j).range(), a(j, i).range());
       for (std::size_t index = 0ul; index < t(i, j).size(); ++index) {
@@ -588,8 +588,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(scal_subt_perm, ITensor, itensor_types) {
   BOOST_CHECK(!t.empty());
   BOOST_CHECK_EQUAL(t.range(), perm * a.range());
 
-  for (std::size_t i = 0ul; i < t.range().extent(0); ++i) {
-    for (std::size_t j = 0ul; j < t.range().extent(1); ++j) {
+  for (decltype(t.range().extent(0)) i = 0; i < t.range().extent(0); ++i) {
+    for (decltype(t.range().extent(1)) j = 0; j < t.range().extent(1); ++j) {
       BOOST_CHECK(!t(i, j).empty());
       BOOST_CHECK_EQUAL(t(i, j).range(), a(j, i).range());
       for (std::size_t index = 0ul; index < t(i, j).size(); ++index) {
@@ -609,8 +609,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(subt_to, ITensor, itensor_types) {
   BOOST_CHECK(!t.empty());
   BOOST_CHECK_EQUAL(t.range(), a.range());
 
-  for (std::size_t i = 0ul; i < t.range().extent(0); ++i) {
-    for (std::size_t j = 0ul; j < t.range().extent(1); ++j) {
+  for (decltype(t.range().extent(0)) i = 0; i < t.range().extent(0); ++i) {
+    for (decltype(t.range().extent(1)) j = 0; j < t.range().extent(1); ++j) {
       BOOST_CHECK(!t(i, j).empty());
       BOOST_CHECK_EQUAL(t(i, j).range(), a(i, j).range());
       for (std::size_t index = 0ul; index < t(i, j).size(); ++index) {
@@ -629,8 +629,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(scal_subt_to, ITensor, itensor_types) {
   BOOST_CHECK(!t.empty());
   BOOST_CHECK_EQUAL(t.range(), a.range());
 
-  for (std::size_t i = 0ul; i < t.range().extent(0); ++i) {
-    for (std::size_t j = 0ul; j < t.range().extent(1); ++j) {
+  for (decltype(t.range().extent(0)) i = 0; i < t.range().extent(0); ++i) {
+    for (decltype(t.range().extent(1)) j = 0; j < t.range().extent(1); ++j) {
       BOOST_CHECK(!t(i, j).empty());
       BOOST_CHECK_EQUAL(t(i, j).range(), a(i, j).range());
       for (std::size_t index = 0ul; index < t(i, j).size(); ++index) {
@@ -649,8 +649,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(subt_const, ITensor, itensor_types) {
   BOOST_CHECK(!t.empty());
   BOOST_CHECK_EQUAL(t.range(), a.range());
 
-  for (std::size_t i = 0ul; i < t.range().extent(0); ++i) {
-    for (std::size_t j = 0ul; j < t.range().extent(1); ++j) {
+  for (decltype(t.range().extent(0)) i = 0; i < t.range().extent(0); ++i) {
+    for (decltype(t.range().extent(1)) j = 0; j < t.range().extent(1); ++j) {
       BOOST_CHECK(!t(i, j).empty());
       BOOST_CHECK_EQUAL(t(i, j).range(), a(i, j).range());
       for (std::size_t index = 0ul; index < t(i, j).size(); ++index) {
@@ -668,8 +668,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(subt_to_const, ITensor, itensor_types) {
   BOOST_CHECK(!t.empty());
   BOOST_CHECK_EQUAL(t.range(), a.range());
 
-  for (std::size_t i = 0ul; i < t.range().extent(0); ++i) {
-    for (std::size_t j = 0ul; j < t.range().extent(1); ++j) {
+  for (decltype(t.range().extent(0)) i = 0; i < t.range().extent(0); ++i) {
+    for (decltype(t.range().extent(1)) j = 0; j < t.range().extent(1); ++j) {
       BOOST_CHECK(!t(i, j).empty());
       BOOST_CHECK_EQUAL(t(i, j).range(), a(i, j).range());
       for (std::size_t index = 0ul; index < t(i, j).size(); ++index) {
@@ -688,8 +688,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(mult, ITensor, itensor_types) {
   BOOST_CHECK(!t.empty());
   BOOST_CHECK_EQUAL(t.range(), a.range());
 
-  for (std::size_t i = 0ul; i < t.range().extent(0); ++i) {
-    for (std::size_t j = 0ul; j < t.range().extent(1); ++j) {
+  for (decltype(t.range().extent(0)) i = 0; i < t.range().extent(0); ++i) {
+    for (decltype(t.range().extent(1)) j = 0; j < t.range().extent(1); ++j) {
       BOOST_CHECK(!t(i, j).empty());
       BOOST_CHECK_EQUAL(t(i, j).range(), a(i, j).range());
       for (std::size_t index = 0ul; index < t(i, j).size(); ++index) {
@@ -708,8 +708,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(scal_mult, ITensor, itensor_types) {
   BOOST_CHECK(!t.empty());
   BOOST_CHECK_EQUAL(t.range(), a.range());
 
-  for (std::size_t i = 0ul; i < t.range().extent(0); ++i) {
-    for (std::size_t j = 0ul; j < t.range().extent(1); ++j) {
+  for (decltype(t.range().extent(0)) i = 0; i < t.range().extent(0); ++i) {
+    for (decltype(t.range().extent(1)) j = 0; j < t.range().extent(1); ++j) {
       BOOST_CHECK(!t(i, j).empty());
       BOOST_CHECK_EQUAL(t(i, j).range(), a(i, j).range());
       for (std::size_t index = 0ul; index < t(i, j).size(); ++index) {
@@ -729,8 +729,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(mult_perm, ITensor, itensor_types) {
   BOOST_CHECK(!t.empty());
   BOOST_CHECK_EQUAL(t.range(), perm * a.range());
 
-  for (std::size_t i = 0ul; i < t.range().extent(0); ++i) {
-    for (std::size_t j = 0ul; j < t.range().extent(1); ++j) {
+  for (decltype(t.range().extent(0)) i = 0; i < t.range().extent(0); ++i) {
+    for (decltype(t.range().extent(1)) j = 0; j < t.range().extent(1); ++j) {
       BOOST_CHECK(!t(i, j).empty());
       BOOST_CHECK_EQUAL(t(i, j).range(), a(j, i).range());
       for (std::size_t index = 0ul; index < t(i, j).size(); ++index) {
@@ -749,8 +749,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(scal_mult_perm, ITensor, itensor_types) {
   BOOST_CHECK(!t.empty());
   BOOST_CHECK_EQUAL(t.range(), perm * a.range());
 
-  for (std::size_t i = 0ul; i < t.range().extent(0); ++i) {
-    for (std::size_t j = 0ul; j < t.range().extent(1); ++j) {
+  for (decltype(t.range().extent(0)) i = 0; i < t.range().extent(0); ++i) {
+    for (decltype(t.range().extent(1)) j = 0; j < t.range().extent(1); ++j) {
       BOOST_CHECK(!t(i, j).empty());
       BOOST_CHECK_EQUAL(t(i, j).range(), a(j, i).range());
       for (std::size_t index = 0ul; index < t(i, j).size(); ++index) {
@@ -770,8 +770,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(mult_to, ITensor, itensor_types) {
   BOOST_CHECK(!t.empty());
   BOOST_CHECK_EQUAL(t.range(), a.range());
 
-  for (std::size_t i = 0ul; i < t.range().extent(0); ++i) {
-    for (std::size_t j = 0ul; j < t.range().extent(1); ++j) {
+  for (decltype(t.range().extent(0)) i = 0; i < t.range().extent(0); ++i) {
+    for (decltype(t.range().extent(1)) j = 0; j < t.range().extent(1); ++j) {
       BOOST_CHECK(!t(i, j).empty());
       BOOST_CHECK_EQUAL(t(i, j).range(), a(i, j).range());
       for (std::size_t index = 0ul; index < t(i, j).size(); ++index) {
@@ -790,8 +790,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(scal_mult_to, ITensor, itensor_types) {
   BOOST_CHECK(!t.empty());
   BOOST_CHECK_EQUAL(t.range(), a.range());
 
-  for (std::size_t i = 0ul; i < t.range().extent(0); ++i) {
-    for (std::size_t j = 0ul; j < t.range().extent(1); ++j) {
+  for (decltype(t.range().extent(0)) i = 0; i < t.range().extent(0); ++i) {
+    for (decltype(t.range().extent(1)) j = 0; j < t.range().extent(1); ++j) {
       BOOST_CHECK(!t(i, j).empty());
       BOOST_CHECK_EQUAL(t(i, j).range(), a(i, j).range());
       for (std::size_t index = 0ul; index < t(i, j).size(); ++index) {
@@ -810,8 +810,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(neg, ITensor, itensor_types) {
   BOOST_CHECK(!t.empty());
   BOOST_CHECK_EQUAL(t.range(), a.range());
 
-  for (std::size_t i = 0ul; i < t.range().extent(0); ++i) {
-    for (std::size_t j = 0ul; j < t.range().extent(1); ++j) {
+  for (decltype(t.range().extent(0)) i = 0; i < t.range().extent(0); ++i) {
+    for (decltype(t.range().extent(1)) j = 0; j < t.range().extent(1); ++j) {
       BOOST_CHECK(!t(i, j).empty());
       BOOST_CHECK_EQUAL(t(i, j).range(), a(i, j).range());
       for (std::size_t index = 0ul; index < t(i, j).size(); ++index) {
@@ -829,8 +829,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(neg_perm, ITensor, itensor_types) {
   BOOST_CHECK(!t.empty());
   BOOST_CHECK_EQUAL(t.range(), perm * a.range());
 
-  for (std::size_t i = 0ul; i < t.range().extent(0); ++i) {
-    for (std::size_t j = 0ul; j < t.range().extent(1); ++j) {
+  for (decltype(t.range().extent(0)) i = 0; i < t.range().extent(0); ++i) {
+    for (decltype(t.range().extent(1)) j = 0; j < t.range().extent(1); ++j) {
       BOOST_CHECK(!t(i, j).empty());
       BOOST_CHECK_EQUAL(t(i, j).range(), a(j, i).range());
       for (std::size_t index = 0ul; index < t(i, j).size(); ++index) {
@@ -848,8 +848,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(neg_to, ITensor, itensor_types) {
   BOOST_CHECK(!t.empty());
   BOOST_CHECK_EQUAL(t.range(), a.range());
 
-  for (std::size_t i = 0ul; i < t.range().extent(0); ++i) {
-    for (std::size_t j = 0ul; j < t.range().extent(1); ++j) {
+  for (decltype(t.range().extent(0)) i = 0; i < t.range().extent(0); ++i) {
+    for (decltype(t.range().extent(1)) j = 0; j < t.range().extent(1); ++j) {
       BOOST_CHECK(!t(i, j).empty());
       BOOST_CHECK_EQUAL(t(i, j).range(), a(i, j).range());
       for (std::size_t index = 0ul; index < t(i, j).size(); ++index) {
@@ -1039,8 +1039,8 @@ BOOST_AUTO_TEST_CASE(reduce) {
 
   const auto& range = g.range();
   Tile x_ref;
-  for (std::size_t i = 0ul; i < range.extent(0); ++i) {
-    for (std::size_t j = 0ul; j < range.extent(1); ++j) {
+  for (decltype(range.extent(0)) i = 0ul; i < range.extent(0); ++i) {
+    for (decltype(range.extent(1)) j = 0ul; j < range.extent(1); ++j) {
       contract_12_32(x_ref, &g(i, j), &h(i, j));
     }
   }
