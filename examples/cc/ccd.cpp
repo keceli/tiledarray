@@ -20,6 +20,9 @@
 #include <tiledarray.h>
 #include <iomanip>
 #include "input_data.h"
+#include <madness/world/binary_fstream_archive.h>
+#include <madness/world/text_fstream_archive.h>
+#include <fstream>
 
 using namespace TiledArray;
 using namespace TiledArray::expressions;
@@ -29,6 +32,24 @@ int main(int argc, char** argv) {
   TiledArray::World& world = TiledArray::initialize(argc, argv);
 
   std::string file_name = argv[1];
+  std::string action = argv[2]; // set action to read or write
+  std::string archive_name;
+  int nio;
+  // set serialization archive file name
+  if (argc>3){
+     archive_name = argv[3];
+  }
+  else{
+     archive_name = "archive.bin";
+  }
+  // set number of io ranks for serialization
+  if (argc>4){
+    nio = std::stoi(argv[4]);
+  }  
+  else {
+    nio = 1;
+  }
+
 
   // Open input file.
   std::ifstream input(file_name.c_str());
@@ -295,6 +316,25 @@ int main(int argc, char** argv) {
       t_bb_vvoo("a,b,i,j") =
           D_vvoo("a,b,i,j") * r_bb_vvoo("a,b,i,j") + t_bb_vvoo("a,b,i,j");
 
+      //Serialization
+      const char* charfile = archive_name.c_str();
+      if (action=="write") {
+         if (world.rank() == 0) 
+             std::cout << "Serializing tensors to " << archive_name << " with " << nio << " IO ranks." << "\n";
+         madness::archive::ParallelOutputArchive oar(world, charfile, nio);
+         oar << r_aa_vvoo << r_ab_vvoo << r_bb_vvoo << t_aa_vvoo << v_aa_vvoo << t_bb_vvoo 
+	 << v_bb_vvoo << t_ab_vvoo << v_ab_vvoo;
+         oar.close();
+     }
+     else{	 
+         if (world.rank() == 0) 
+             std::cout << "Deserializing tensors from " << archive_name << " with " << nio << " IO ranks." << "\n";
+         madness::archive::ParallelInputArchive  iar(world, charfile, nio);
+         iar >> r_aa_vvoo >> r_ab_vvoo >> r_bb_vvoo >> t_aa_vvoo >> v_aa_vvoo >> t_bb_vvoo 
+	 >> v_bb_vvoo >> t_ab_vvoo >> v_ab_vvoo;
+	 iar.close();
+     }
+
       const double error =
           (r_aa_vvoo("a,b,i,j") + r_ab_vvoo("a,b,i,j") + r_bb_vvoo("a,b,i,j"))
               .norm();
@@ -309,7 +349,7 @@ int main(int argc, char** argv) {
         std::cout << " error  = " << std::setprecision(12) << error << "\n"
                   << " energy = " << std::setprecision(12) << energy << "\n";
 
-      if (error < 1.0e-10) break;
+      if (error < 1.0e-1) break;
     }
 
     if (world.rank() == 0) {
